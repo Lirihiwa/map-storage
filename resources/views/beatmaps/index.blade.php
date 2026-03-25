@@ -1,9 +1,4 @@
 <x-app-layout>
-	<x-slot name="header">
-		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
-			{{ __('Недавно загруженные карты')  }}
-		</h2>
-	</x-slot>
 	<div class="py-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -14,7 +9,8 @@
 								{{ $set->status }}
 							</span>
 						</div>
-						<span class="block p-4">{{ $set->artist }} - {{ $set->title }}</span>
+						<span class="block px-4 pt-2">{{ $set->artist }} - {{ $set->title }}</span>
+						<span class="block px-4 text-sm text-gray-600">{{ $set->creator }}</span>
 					</div>
 				@endforeach
 			</div>
