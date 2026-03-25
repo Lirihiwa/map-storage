@@ -59,7 +59,7 @@
 								@csrf
 
 								<x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-													this.closest('form').submit();">
+															this.closest('form').submit();">
 									{{ __('Log Out') }}
 								</x-dropdown-link>
 							</form>
@@ -91,54 +91,53 @@
 
 	<!-- Responsive Navigation Menu -->
 	<div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-		<div class="pt-2 pb-3 space-y-1"></div>
-		@auth
-			@if(Auth::user()->isAdmin())
-
-				<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-					{{ __('Дашборд') }}
-				</x-responsive-nav-link>
-
-			@endif
-		@endauth
-
-		<x-responsive-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')">
-			{{ __('Библиотека карт') }}
-		</x-responsive-nav-link>
-
-		<x-responsive-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
-			{{ __('Публикация') }}
-		</x-responsive-nav-link>
-	</div>
-	<!-- Responsive Settings Options -->
-	@auth
-		<div class="pt-4 pb-1 border-t border-gray-200">
-			<div class="px-4">
-				<div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-				<div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-			</div>
-
-			<div class="mt-3 space-y-1">
-				<x-responsive-nav-link :href="route('profile.edit')">
-					{{ __('Profile') }}
-				</x-responsive-nav-link>
-
-				<!-- Authentication -->
-				<form method="POST" action="{{ route('logout') }}">
-					@csrf
-
-					<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-											this.closest('form').submit();">
-						{{ __('Log Out') }}
+		<div class="pt-2 pb-3 space-y-1">
+			@auth
+				@if(Auth::user()->isAdmin())
+					<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+						{{ __('Дашборд') }}
 					</x-responsive-nav-link>
-				</form>
+				@endif
+			@endauth
+
+			<x-responsive-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')">
+				{{ __('Библиотека карт') }}
+			</x-responsive-nav-link>
+
+			<x-responsive-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
+				{{ __('Публикация') }}
+			</x-responsive-nav-link>
+		</div>
+
+		<!-- Responsive Settings Options -->
+		@auth
+			<div class="pt-4 pb-1 border-t border-gray-200">
+				<div class="px-4">
+					<div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+					<div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+				</div>
+
+				<div class="mt-3 space-y-1">
+					<x-responsive-nav-link :href="route('profile.edit')">
+						{{ __('Profile') }}
+					</x-responsive-nav-link>
+
+					<!-- Authentication -->
+					<form method="POST" action="{{ route('logout') }}">
+						@csrf
+
+						<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+													this.closest('form').submit();">
+							{{ __('Log Out') }}
+						</x-responsive-nav-link>
+					</form>
+				</div>
 			</div>
-		</div>
-	@else
-		<div class="pt-4 pb-1 border-t border-gray-200">
-			<x-responsive-nav-link :href="route('login')">Log in</x-responsive-nav-link>
-			<x-responsive-nav-link :href="route('register')">Register</x-responsive-nav-link>
-		</div>
-	@endauth
+		@else
+			<div class="pt-4 pb-1 border-t border-gray-200">
+				<x-responsive-nav-link :href="route('login')">Log in</x-responsive-nav-link>
+				<x-responsive-nav-link :href="route('register')">Register</x-responsive-nav-link>
+			</div>
+		@endauth
 	</div>
 </nav>
