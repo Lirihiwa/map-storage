@@ -62,7 +62,7 @@
                 @foreach($latestMaps as $set)
 					<!-- TODO: заменить маршрут на beatmap.show -->
 					<!-- Карточка -->
-                    <a href="{{ route('beatmaps.index', $set) }}" class="group">
+                    <a href="{{ route('beatmaps.show', $set) }}" class="group">
                         <div class="bg-white rounded-lg overflow-hidden border border-gray-200 group-hover:border-pink-300 transition duration-300 shadow-sm group-hover:shadow-md">
                             <!-- Изображение -->
                             <div class="h-40 bg-cover bg-center relative" style="background-image: url('{{ asset('storage/' . $set->bg_path) }}')">

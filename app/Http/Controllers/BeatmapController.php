@@ -109,6 +109,30 @@ class BeatmapController extends Controller
 		return view('beatmaps.index', compact('beatmapSets'));
 	}
 
+	public function show(BeatmapSet $beatmapSet) {
+		$beatmapSet->load('beatmaps');
+		return view('beatmaps.show', compact('beatmapSet'));
+	}
+
+	public function download(BeatmapSet $beatmapSet) {
+		$fullPath = storage_path('app/public/' . $beatmapSet->file_path);
+
+		if (!$beatmapSet->file_path || !file_exists($fullPath)) {
+			abort(404, 'Файл карты не найден.');
+		}
+
+		// Символы, недопустимые в названии файла
+		$cleanArtist = str_replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], '', $beatmapSet->artist);
+    	$cleanTitle = str_replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], '', $beatmapSet->title);
+
+		$safeName = "{$cleanArtist} - {$cleanTitle}.osz";
+
+		return response()->download($fullPath, $safeName, [
+			'Content-Type' => 'application/octet-stream',
+			'Content-Disposition' => 'attachment; filename="' . $safeName . '"',
+		]);
+	}
+
 	// Извлечение метаинформации из файла .osu
 	private function parseOsuFile($filePath) {
 		$content = file_get_contents($filePath);

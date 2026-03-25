@@ -9,9 +9,9 @@ use App\Models\User;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        $latestMaps = BeatmapSet::latest()->take(4)->get();
+	public function index()
+	{
+		$latestMaps = BeatmapSet::latest()->take(4)->get();
 
 		$stats = [
 			'users' => User::count(),
@@ -19,6 +19,6 @@ class HomeController extends Controller
 			'beatmaps' => Beatmap::count(),
 		];
 
-        return view('welcome', compact('latestMaps', 'stats'));
-    }
+		return view('welcome', compact('latestMaps', 'stats'));
+	}
 }
