@@ -51,24 +51,23 @@
 
 						<x-slot name="content">
 							<x-dropdown-link :href="route('profile.edit')">
-								{{ __('Profile') }}
+								{{ __('Профиль') }}
 							</x-dropdown-link>
 
 							<!-- Authentication -->
 							<form method="POST" action="{{ route('logout') }}">
 								@csrf
-
 								<x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
 															this.closest('form').submit();">
-									{{ __('Log Out') }}
+									{{ __('Выйти') }}
 								</x-dropdown-link>
 							</form>
 						</x-slot>
 					</x-dropdown>
 				@else
 					<div class="space-x-4">
-						<a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
-						<a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Register</a>
+						<a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Войти</a>
+						<a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Зарегистрироваться</a>
 					</div>
 				@endauth
 			</div>
@@ -119,24 +118,23 @@
 
 				<div class="mt-3 space-y-1">
 					<x-responsive-nav-link :href="route('profile.edit')">
-						{{ __('Profile') }}
+						{{ __('Профиль') }}
 					</x-responsive-nav-link>
 
 					<!-- Authentication -->
 					<form method="POST" action="{{ route('logout') }}">
 						@csrf
-
 						<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
 													this.closest('form').submit();">
-							{{ __('Log Out') }}
+							{{ __('Выйти') }}
 						</x-responsive-nav-link>
 					</form>
 				</div>
 			</div>
 		@else
 			<div class="pt-4 pb-1 border-t border-gray-200">
-				<x-responsive-nav-link :href="route('login')">Log in</x-responsive-nav-link>
-				<x-responsive-nav-link :href="route('register')">Register</x-responsive-nav-link>
+				<x-responsive-nav-link :href="route('login')">Войти</x-responsive-nav-link>
+				<x-responsive-nav-link :href="route('register')">Зарегистрироваться</x-responsive-nav-link>
 			</div>
 		@endauth
 	</div>
