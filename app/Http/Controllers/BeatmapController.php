@@ -101,6 +101,14 @@ class BeatmapController extends Controller
 		return back()->withErrors(['osz_file' => 'Не удалось открыть файл.']);
 	}
 
+	public function index() {
+		$beatmapSets = BeatmapSet::with('beatmaps')
+			->latest()
+			->paginate(12);
+
+		return view('beatmaps.index', compact('beatmapSets'));
+	}
+
 	// Извлечение метаинформации из файла .osu
 	private function parseOsuFile($filePath) {
 		$content = file_get_contents($filePath);

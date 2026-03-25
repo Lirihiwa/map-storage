@@ -4,9 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BeatmapController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware(['auth']);
+Route::get('/', [BeatmapController::class, 'index'])->name('home');
 
 Route::get('/admin', function () {
 	return 'Добро пожаловать, администратор!';
