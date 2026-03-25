@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BeatmapController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [BeatmapController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+
+Route::get('/beatmaps', [BeatmapController::class, 'index'])->name('beatmaps.index');
 
 Route::get('/admin', function () {
 	return 'Добро пожаловать, администратор!';

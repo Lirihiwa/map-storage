@@ -95,7 +95,7 @@ class BeatmapController extends Controller
 			$this->recursiveRemDir($tempPath);
 			$zip->close();
 
-			return redirect()->route('home')->with('success', 'Карта успешно загружена!');
+			return redirect()->route('beatmaps.index')->with('success', 'Карта успешно загружена!');
 		}
 
 		return back()->withErrors(['osz_file' => 'Не удалось открыть файл.']);
