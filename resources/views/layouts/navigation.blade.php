@@ -98,9 +98,9 @@
 			{{ __('Библиотека карт') }}
 		</x-responsive-nav-link>
 
-		<x-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
+		<x-responsive-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
             {{ __('Публикация') }}
-        </x-nav-link>
+        </x-responsive-nav-link>
 
         <!-- Responsive Settings Options -->
 		@auth
