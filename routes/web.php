@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\BeatmapController as AdminBeatmapController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
 	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 	Route::get('/beatmaps/upload', [BeatmapController::class, 'create'])->name('beatmaps.upload');
 	Route::post('/beatmaps/upload', [BeatmapController::class, 'store'])->name('beatmaps.store');
+	Route::get('/users/{user}', [UserController::class,'show'])->name('users.show');
 });
 
 Route::middleware(['auth', 'role:admin,moderator'])->prefix('panel')->group(function () {

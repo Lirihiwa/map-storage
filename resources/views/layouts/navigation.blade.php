@@ -15,7 +15,7 @@
 					@auth
 						@if(Auth::user()->hasRole('admin'))
 							<x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-								{{ __('Упр. пользователями') }}
+								{{ __('Админка') }}
 							</x-nav-link>
 							<x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
 								{{ __('Дашборд') }}
@@ -29,7 +29,7 @@
 						@endif
 					@endauth
 					<x-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')">
-						{{ __('Библиотека карт') }}
+						{{ __('Карты') }}
 					</x-nav-link>
 
 					<x-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
@@ -103,7 +103,7 @@
 			@auth
 				@if(Auth::user()->hasRole('admin'))
 					<x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-						{{ __('Упр. пользователями') }}
+						{{ __('Админка') }}
 					</x-responsive-nav-link>
 					<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
 						{{ __('Дашборд') }}
@@ -119,7 +119,7 @@
 			@endauth
 
 			<x-responsive-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')">
-				{{ __('Библиотека карт') }}
+				{{ __('Карты') }}
 			</x-responsive-nav-link>
 
 			<x-responsive-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">

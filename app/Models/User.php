@@ -95,4 +95,9 @@ class User extends Authenticatable
 		$roleIds = Role::whereIn('name', $roles)->pluck('id');
 		$this->roles()->sync($roleIds);
 	}
+
+	public function beatmapSets()
+	{
+		return $this->hasMany(BeatmapSet::class);
+	}
 }
