@@ -1,13 +1,10 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Панель администратора') }}
-        </h2>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+			<span class="text-2xl font-bold text-gray-800 mb-6 block">
+				Уровень доступа: {{ Auth::user()->isAdmin() ? 'Администратор' : 'Модератор' }}
+			</span>
+
             <!-- Фильтр по времени -->
             <div class="mb-6 flex justify-end">
                 <form action="{{ route('admin.dashboard') }}" method="GET" class="flex items-center gap-2">
@@ -71,7 +68,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
-</x-app-layout>\
+</x-app-layout>

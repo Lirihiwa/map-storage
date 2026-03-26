@@ -15,7 +15,7 @@
 					@auth
 						@if(Auth::user()->isAdmin())
 							<x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-								{{ __('Дашборд') }}
+								{{ __('Панель управления') }}
 							</x-nav-link>
 						@endif
 					@endauth
@@ -94,7 +94,7 @@
 			@auth
 				@if(Auth::user()->isAdmin())
 					<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-						{{ __('Дашборд') }}
+						{{ __('Панель управления') }}
 					</x-responsive-nav-link>
 				@endif
 			@endauth
