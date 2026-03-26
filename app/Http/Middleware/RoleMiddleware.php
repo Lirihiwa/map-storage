@@ -15,18 +15,20 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-		if (!auth()->check()) {
+		$user = auth()->user();
+
+		if (!$user) {
 			abort(403, 'Вы должны быть авторизованы для доступа к этому ресурсу.');
 		}
 
-		$userRole = auth()->user()->role;
-
-		if ($userRole === 'admin') {
+		if ($user->isAdmin()) {
 			return $next($request);
 		}
 
-		if ($role === 'moderator' && $userRole === 'moderator') {
-			return $next($request);
+		foreach ($roles as $role) {
+			if ($user->hasRole($role)) {
+				return $next($request);
+			}
 		}
 			
 		abort(403, 'Недостаточно прав для доступа к этому ресурсу.');
