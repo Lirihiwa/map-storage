@@ -32,6 +32,8 @@ Route::middleware(['auth', 'role:admin,moderator'])->prefix('panel')->group(func
 	Route::delete('/beatmaps/{beatmapSet}', [AdminBeatmapController::class, 'destroy'])->name('admin.beatmaps.destroy');
 
 	Route::middleware('role:admin')->group(function () {
+		Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admin.dashboard');
+
 		Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
 		Route::patch('/users/{user}/roles', [AdminUserController::class, 'updateRoles'])->name('admin.users.roles');
 		Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');

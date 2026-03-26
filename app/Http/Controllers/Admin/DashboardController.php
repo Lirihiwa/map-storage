@@ -24,7 +24,7 @@ class DashboardController extends Controller
 		$recentUsers = User::latest()->take(5)->get();
 		$recentBeatmapSets = BeatmapSet::latest()->take(5)->get();
 
-		return view('admin.panel', compact(
+		return view('admin.dashboard', compact(
 			'newUsers',
 			'newBeatmapSets',
 			'totalUsers',
