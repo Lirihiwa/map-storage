@@ -13,8 +13,8 @@
 				<!-- Navigation Links -->
 				<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 					@auth
-						@if(Auth::user()->isAdmin())
-							<x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+						@if(Auth::user()->isAdmin() || Auth::user()->isModerator())
+							<x-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')">
 								{{ __('Панель управления') }}
 							</x-nav-link>
 						@endif
@@ -92,8 +92,8 @@
 	<div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
 		<div class="pt-2 pb-3 space-y-1">
 			@auth
-				@if(Auth::user()->isAdmin())
-					<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+				@if(Auth::user()->isAdmin() || Auth::user()->isModerator())
+					<x-responsive-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')">
 						{{ __('Панель управления') }}
 					</x-responsive-nav-link>
 				@endif
