@@ -40,13 +40,52 @@ class User extends Authenticatable
 		return $this->hasRole('moderator');
 	}
 
+	// Все роли пользователя
 	public function roles()
 	{
 		return $this->belongsToMany(Role::class);
 	}
 
-	public function hasRole(string $role): bool
+	// Проверяет есть ли у пользователя хотя бы одна роль из списка
+	public function hasRole(string|array $roles): bool
 	{
-		return $this->roles->contains('name', $role);
+		if (is_string($roles)) {
+			return $this->roles->contains('name', $roles);
+		}
+
+		foreach ($roles as $role) {
+			if ($this->hasRole($role)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// Выдает роль пользователю
+	public function assignRole(string $roleName)
+	{
+		$role = Role::where('name', $roleName)->first();
+
+		if ($role && !$this->hasRole($roleName)) {
+			$this->roles()->attach($role);
+		}
+	}
+
+	// Удаляет роль у пользователя
+	public function removeRole(string $roleName) 
+	{
+		$role = Role::where('name', $roleName)->first();
+
+		if ($role && $this->hasRole($roleName)) {
+			$this->roles()->detach($role);
+		}
+	}
+
+	// Синхронизирует роли пользователя, удаляя старые и добавляя новые
+	public function syncRoles(array $roles) 
+	{
+		$roleIds = Role::whereIn('name', $roles)->pluck('id');
+		$this->roles()->sync($roleIds);
 	}
 }

@@ -25,10 +25,8 @@ class RoleMiddleware
 			return $next($request);
 		}
 
-		foreach ($roles as $role) {
-			if ($user->hasRole($role)) {
-				return $next($request);
-			}
+		if (!empty($roles) && $user->hasRole($roles)) {
+			return $next($request);
 		}
 			
 		abort(403, 'Недостаточно прав для доступа к этому ресурсу.');
