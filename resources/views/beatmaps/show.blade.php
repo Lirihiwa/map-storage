@@ -17,10 +17,11 @@
                 <div class="flex flex-col md:flex-row">
                     <!-- Левая колонка: Визуал, Аудио и Скачивание -->
                     <div class="w-full md:w-1/3 p-6 border-b md:border-b-0 md:border-r border-gray-100">
-                        <div class="rounded-xl overflow-hidden shadow-md mb-6">
+                        <div class="rounded-xl overflow-hidden shadow-md mb-6 group relative">
                             <img src="{{ asset('storage/' . ($beatmapSet->bg_path ?? 'default.jpg')) }}" 
-                                 class="w-full h-auto object-cover" 
+                                 class="w-full h-auto object-cover transform group-hover:scale-110 transition duration-500" 
                                  alt="Background">
+							<div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition duration-500"></div>
                         </div>
 
                         @if($beatmapSet->audio_path)
