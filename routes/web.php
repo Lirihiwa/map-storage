@@ -5,6 +5,7 @@ use App\Http\Controllers\BeatmapController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\BeatmapController as AdminBeatmapController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
@@ -29,6 +30,12 @@ Route::middleware(['auth', 'role:admin,moderator'])->prefix('panel')->group(func
 	Route::get('/beatmaps', [AdminBeatmapController::class, 'index'])->name('admin.beatmaps.index');
 	Route::patch('/beatmaps/{beatmapSet}/status', [AdminBeatmapController::class, 'updateStatus'])->name('admin.beatmaps.status');
 	Route::delete('/beatmaps/{beatmapSet}', [AdminBeatmapController::class, 'destroy'])->name('admin.beatmaps.destroy');
+
+	Route::middleware('role:admin')->group(function () {
+		Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+		Route::patch('/users/{user}/roles', [AdminUserController::class, 'updateRoles'])->name('admin.users.roles');
+		Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+	});
 });
 
 Route::get('/beatmaps', [BeatmapController::class, 'index'])->name('beatmaps.index');

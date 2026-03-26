@@ -15,7 +15,13 @@
 					@auth
 						@if(Auth::user()->isAdmin() || Auth::user()->isModerator())
 							<x-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')">
-								{{ __('Панель управления') }}
+								{{ __('Модерация') }}
+							</x-nav-link>
+						@endif
+
+						@if(Auth::user()->hasRole('admin'))
+							<x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+								{{ __('Упр. пользователями') }}
 							</x-nav-link>
 						@endif
 					@endauth
@@ -58,7 +64,7 @@
 							<form method="POST" action="{{ route('logout') }}">
 								@csrf
 								<x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-															this.closest('form').submit();">
+																	this.closest('form').submit();">
 									{{ __('Выйти') }}
 								</x-dropdown-link>
 							</form>
@@ -93,8 +99,15 @@
 		<div class="pt-2 pb-3 space-y-1">
 			@auth
 				@if(Auth::user()->isAdmin() || Auth::user()->isModerator())
-					<x-responsive-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')">
-						{{ __('Панель управления') }}
+					<x-responsive-nav-link :href="route('admin.beatmaps.index')"
+						:active="request()->routeIs('admin.beatmaps.*')">
+						{{ __('Модерация') }}
+					</x-responsive-nav-link>
+				@endif
+
+				@if(Auth::user()->hasRole('admin'))
+					<x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+						{{ __('Упр. пользователями') }}
 					</x-responsive-nav-link>
 				@endif
 			@endauth
@@ -125,7 +138,7 @@
 					<form method="POST" action="{{ route('logout') }}">
 						@csrf
 						<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-													this.closest('form').submit();">
+															this.closest('form').submit();">
 							{{ __('Выйти') }}
 						</x-responsive-nav-link>
 					</form>
