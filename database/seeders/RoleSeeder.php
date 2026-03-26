@@ -22,11 +22,6 @@ class RoleSeeder extends Seeder
 			'display_name' => 'Модератор',
 		]);
 
-		$userRole = \App\Models\Role::create([
-			'name' => 'user',
-			'display_name' => 'Пользователь',
-		]);
-
 		$firstUser = \App\Models\User::first();
 		if ($firstUser) {
 			$firstUser->roles()->attach($adminRole);
