@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('beatmap_sets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title');
 			$table->string('artist');
 			$table->string('creator');
