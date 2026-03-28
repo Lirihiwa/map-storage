@@ -11,12 +11,13 @@ use ZipArchive;
 
 class BeatmapController extends Controller
 {
-    public function create() {
+	public function create()
+	{
 		return view('beatmaps.upload');
 	}
 
 	public function store(Request $request): \Illuminate\Http\RedirectResponse
-    {
+	{
 		$request->validate([
 			'osz_file' => 'required|file|extensions:osz|max:102400',
 		]);
@@ -44,11 +45,11 @@ class BeatmapController extends Controller
 			$audioPath = null;
 
 			if (!Storage::disk('public')->exists('backgrounds')) {
-    			Storage::disk('public')->makeDirectory('backgrounds');
+				Storage::disk('public')->makeDirectory('backgrounds');
 			}
 
 			if (!Storage::disk('public')->exists('audio')) {
-    			Storage::disk('public')->makeDirectory('audio');
+				Storage::disk('public')->makeDirectory('audio');
 			}
 
 			if ($bgFilename && file_exists($tempPath . DIRECTORY_SEPARATOR . $bgFilename)) {
@@ -82,7 +83,7 @@ class BeatmapController extends Controller
 
 				$set->beatmaps()->create([
 					'difficulty_name' => $diffMeta['Metadata']['Version'] ?? 'Unknown Difficulty',
-					'mode' => (int)$diffMeta['General']['Mode'] ?? 0,
+					'mode' => (int) $diffMeta['General']['Mode'] ?? 0,
 					'ar' => $diffMeta['Difficulty']['ApproachRate'] ?? 0,
 					'od' => $diffMeta['Difficulty']['OverallDifficulty'] ?? 0,
 					'cs' => $diffMeta['Difficulty']['CircleSize'] ?? 0,
@@ -101,7 +102,8 @@ class BeatmapController extends Controller
 		return back()->withErrors(['osz_file' => 'Не удалось открыть файл.']);
 	}
 
-	public function index() {
+	public function index()
+	{
 		$beatmapSets = BeatmapSet::with('beatmaps')
 			->latest()
 			->paginate(12);
@@ -109,12 +111,14 @@ class BeatmapController extends Controller
 		return view('beatmaps.index', compact('beatmapSets'));
 	}
 
-	public function show(BeatmapSet $beatmapSet) {
+	public function show(BeatmapSet $beatmapSet)
+	{
 		$beatmapSet->load('beatmaps');
 		return view('beatmaps.show', compact('beatmapSet'));
 	}
 
-	public function download(BeatmapSet $beatmapSet) {
+	public function download(BeatmapSet $beatmapSet)
+	{
 		$fullPath = storage_path('app/public/' . $beatmapSet->file_path);
 
 		if (!$beatmapSet->file_path || !file_exists($fullPath)) {
@@ -123,7 +127,7 @@ class BeatmapController extends Controller
 
 		// Символы, недопустимые в названии файла
 		$cleanArtist = str_replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], '', $beatmapSet->artist);
-    	$cleanTitle = str_replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], '', $beatmapSet->title);
+		$cleanTitle = str_replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], '', $beatmapSet->title);
 
 		$safeName = "{$cleanArtist} - {$cleanTitle}.osz";
 
@@ -134,7 +138,8 @@ class BeatmapController extends Controller
 	}
 
 	// Извлечение метаинформации из файла .osu
-	private function parseOsuFile($filePath) {
+	private function parseOsuFile($filePath)
+	{
 		$content = file_get_contents($filePath);
 		$lines = explode("\n", $content);
 		$data = [
@@ -168,9 +173,17 @@ class BeatmapController extends Controller
 			}
 
 			// Извлечение bg из секции Events
-			if ($currentSection ===  'Events' && str_contains($line, '.')) {
-				if (preg_match('/0,0,("?)(?P<file>[^",\r\n]+)\1/', $line, $matches)) {
-					$data['Background'] = $matches['file'];
+			if ($currentSection === 'Events') {
+				$parts = explode(',', $line);
+
+				if (trim($parts[0]) === '0') {
+					if (isset($parts[2])) {
+						$bgFilename = trim($parts[2], '" ');
+
+						if (str_contains($bgFilename, '.')) {
+							$data['Background'] = $bgFilename;
+						}
+					}
 				}
 			}
 
@@ -191,7 +204,8 @@ class BeatmapController extends Controller
 	}
 
 	// Рекурсивное удаление директории
-	private function recursiveRemDir($dir) {
+	private function recursiveRemDir($dir)
+	{
 		if (is_dir($dir)) {
 			$objs = scandir($dir);
 
