@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 	Route::get('/beatmaps/upload', [BeatmapController::class, 'create'])->name('beatmaps.upload');
 	Route::post('/beatmaps/upload', [BeatmapController::class, 'store'])->name('beatmaps.store');
+	Route::delete('/beatmaps/{beatmapSet}', [BeatmapController::class, 'destroy'])->name('beatmaps.destroy');
 	Route::get('/users/{user}', [UserController::class,'show'])->name('users.show');
 });
 

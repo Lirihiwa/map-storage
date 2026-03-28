@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\BeatmapSet;
 use App\Models\Beatmap;
 use ZipArchive;
 
 class BeatmapController extends Controller
 {
+	use AuthorizesRequests;
 	public function create()
 	{
 		return view('beatmaps.upload');
@@ -135,6 +137,26 @@ class BeatmapController extends Controller
 			'Content-Type' => 'application/octet-stream',
 			'Content-Disposition' => 'attachment; filename="' . $safeName . '"',
 		]);
+	}
+
+	public function destroy(BeatmapSet $beatmapSet) {
+		$this->authorize('delete', $beatmapSet);
+		
+		if ($beatmapSet->file_path) {
+			Storage::disk('public')->delete($beatmapSet->file_path);
+		}
+
+		if ($beatmapSet->bg_path) {
+			Storage::disk('public')->delete($beatmapSet->bg_path);
+		}
+
+		if ($beatmapSet->audio_path) {
+			Storage::disk('public')->delete($beatmapSet->audio_path);
+		}
+
+		$beatmapSet->delete();
+
+		return redirect()->route('beatmaps.index')->with('success', 'Карта успешно удалена!');
 	}
 
 	// Извлечение метаинформации из файла .osu
