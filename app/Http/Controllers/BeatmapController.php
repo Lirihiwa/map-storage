@@ -13,6 +13,7 @@ use ZipArchive;
 class BeatmapController extends Controller
 {
 	use AuthorizesRequests;
+
 	public function create()
 	{
 		return view('beatmaps.upload');
@@ -104,11 +105,25 @@ class BeatmapController extends Controller
 		return back()->withErrors(['osz_file' => 'Не удалось открыть файл.']);
 	}
 
-	public function index()
+	public function index(Request $request)
 	{
-		$beatmapSets = BeatmapSet::with('beatmaps')
-			->latest()
-			->paginate(12);
+		$query = BeatmapSet::with(['user', 'beatmaps']);
+
+		if ($request->filled('q')) {
+			$search = $request->input('q');
+
+			$query->where(function ($q) use ($search) {
+				$q->where('title', 'like', "%{$search}%")
+					->orWhere('artist', 'like', "%{$search}%")
+					->orWhere('creator', 'like', "%{$search}%");
+			});
+		}
+
+		if ($request->filled('status')) {
+			$query->where('status', $request->input('status'));
+		}
+
+		$beatmapSets = $query->latest()->paginate(12)->withQueryString();
 
 		return view('beatmaps.index', compact('beatmapSets'));
 	}
