@@ -4,7 +4,7 @@
 			<h2 class="font-semibold text-xl text-gray-800 leading-tight">
 				{{ $beatmapSet->artist }} - {{ $beatmapSet->title }}
 			</h2>
-			<a href="{{ route('beatmaps.index') }}" class="text-sm text-pink-600 hover:underline">
+			<a href="{{ route('beatmaps.index') }}" wire:navigate class="text-sm text-pink-600 hover:underline">
 				&larr; Назад к списку
 			</a>
 		</div>
@@ -26,18 +26,22 @@
 							</div>
 						</div>
 
+						<!-- Кнопка запуска превью трека -->
 						@if($beatmapSet->audio_path)
-							<div class="mb-6">
-								<p class="text-xs font-bold text-gray-400 uppercase mb-2">Превью трека</p>
-								<audio controls class="w-full">
-									<source src="{{ asset('storage/' . $beatmapSet->audio_path) }}" type="audio/mpeg">
-									Браузер не поддерживает аудио.
-								</audio>
-							</div>
+							<button
+								onclick="playSong('{{ addslashes($beatmapSet->title) }}', '{{ addslashes($beatmapSet->artist) }}', '{{ asset('storage/' . $beatmapSet->bg_path) }}', '{{ asset('storage/' . $beatmapSet->audio_path) }}')"
+								class="mb-6 w-full flex items-center justify-center gap-3 bg-white border-2 border-pink-500 text-pink-600 font-black py-3 rounded-2xl hover:bg-pink-50 transition-all shadow-sm active:scale-95">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 1024 1024">
+									<title>Play-circle-outlined SVG Icon</title>
+									<path fill="currentColor" d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372"/>
+									<path fill="currentColor" d="m719.4 499.1l-296.1-215A15.9 15.9 0 0 0 398 297v430c0 13.1 14.8 20.5 25.3 12.9l296.1-215a15.9 15.9 0 0 0 0-25.8m-257.6 134V390.9L628.5 512z"/>
+								</svg>
+								Слушать
+							</button>
 						@endif
 
 						<div class="space-y-3">
-							<a href="{{ route('beatmaps.download', $beatmapSet) }}"
+							<a href="{{ route('beatmaps.download', $beatmapSet) }}" wire:navigate
 								class="flex items-center justify-center gap-2 w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-pink-200">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
 									stroke="currentColor">
@@ -136,7 +140,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

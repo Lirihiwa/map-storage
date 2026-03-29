@@ -62,7 +62,7 @@
 						@foreach($recentBeatmapSets as $map)
 							<tr class="border-b last:border-0 hover:bg-gray-50 transition">
 								<td class="p-3 font-bold text-pink-600">
-									<a href="{{ route('beatmaps.show', $map) }}">{{ $map->title }}</a>
+									<a href="{{ route('beatmaps.show', $map) }}" wire:navigate>{{ $map->title }}</a>
 								</td>
 								<td class="p-3 text-gray-400 text-xs">{{ $map->created_at->format('d.m.Y H:i') }}</td>
 							</tr>

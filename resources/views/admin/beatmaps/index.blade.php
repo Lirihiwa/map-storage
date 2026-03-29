@@ -17,11 +17,11 @@
 
             <!-- Фильтр по статусам -->
             <div class="mb-6 flex gap-2">
-                <a href="{{ route('admin.beatmaps.index') }}" 
+                <a href="{{ route('admin.beatmaps.index') }}" wire:navigate
                    class="px-4 py-2 rounded-md text-sm font-medium {{ !request('status') ? 'bg-gray-800 text-white' : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50' }}">
                     Все карты
                 </a>
-                <a href="{{ route('admin.beatmaps.index', ['status' => 'pending']) }}" 
+                <a href="{{ route('admin.beatmaps.index', ['status' => 'pending']) }}" wire:navigate
                    class="px-4 py-2 rounded-md text-sm font-medium {{ request('status') == 'pending' ? 'bg-pink-600 text-white' : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50' }}">
                     Ожидают проверки (Pending)
                 </a>
@@ -50,7 +50,7 @@
                                             </div>
                                             <div>
                                                 <!-- Ссылка на страницу просмотра карты (откроется в новой вкладке) -->
-                                                <a href="{{ route('beatmaps.show', $map) }}" target="_blank" class="font-bold text-gray-900 hover:text-pink-600 transition">
+                                                <a href="{{ route('beatmaps.show', $map) }}" wire:navigate target="_blank" class="font-bold text-gray-900 hover:text-pink-600 transition">
                                                     {{ $map->artist }} - {{ $map->title }}
                                                 </a>
 												<!-- TODO: Сделать кликабельным (переход в поиск => /panel/beatmaps?mapper=*) -->

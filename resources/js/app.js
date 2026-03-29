@@ -1,7 +1,6 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-Alpine.start();
+// Уже импортируются в breeze
+// import Alpine from 'alpinejs';
+// window.Alpine = Alpine;
+//Alpine.start();

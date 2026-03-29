@@ -9,15 +9,15 @@
                 Открытый сервис публикации и скачивания карт osu!.
             </p>
             <div class="flex justify-center gap-4">
-                <a href="{{ route('beatmaps.index') }}" class="px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg transition shadow-md">
+                <a href="{{ route('beatmaps.index') }}" wire:navigate class="px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg transition shadow-md">
                     Смотреть карты
                 </a>
                 @auth
-                    <a href="{{ route('beatmaps.upload') }}" class="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-lg transition border border-gray-300">
+                    <a href="{{ route('beatmaps.upload') }}" wire:navigate class="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-lg transition border border-gray-300">
                         Загрузить .osz
                     </a>
                 @else
-                    <a href="{{ route('register') }}" class="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-lg transition border border-gray-300">
+                    <a href="{{ route('register') }}" wire:navigate class="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-lg transition border border-gray-300">
                         Присоединиться
                     </a>
                 @endauth
@@ -53,7 +53,7 @@
                     <h2 class="text-2xl font-bold text-gray-900">Недавние</h2>
                     <p class="text-gray-500 text-sm mt-1">Самые свежие карты</p>
                 </div>
-                <a href="{{ route('beatmaps.index') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm flex items-center gap-1">
+                <a href="{{ route('beatmaps.index') }}" wire:navigate class="text-pink-600 hover:text-pink-700 font-semibold text-sm flex items-center gap-1">
                     Все карты <span>&rarr;</span>
                 </a>
             </div>
@@ -62,7 +62,7 @@
                 @foreach($latestMaps as $set)
 					<!-- TODO: заменить маршрут на beatmap.show -->
 					<!-- Карточка -->
-                    <a href="{{ route('beatmaps.show', $set) }}" class="group">
+                    <a href="{{ route('beatmaps.show', $set) }}" wire:navigate class="group">
                         <div class="bg-white rounded-lg overflow-hidden border border-gray-200 group-hover:border-pink-300 transition duration-300 shadow-sm group-hover:shadow-md">
                             <!-- Изображение -->
                             <div class="h-40 bg-cover bg-center relative" style="background-image: url('{{ asset('storage/' . $set->bg_path) }}')">

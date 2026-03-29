@@ -5,7 +5,7 @@
 			<div class="flex">
 				<!-- Logo -->
 				<div class="shrink-0 flex items-center">
-					<a href="{{ route('welcome') }}">
+					<a href="{{ route('welcome') }}" wire:navigate>
 						<x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
 					</a>
 				</div>
@@ -14,16 +14,16 @@
 				<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 					@auth
 						@if(Auth::user()->hasRole('admin'))
-							<x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+							<x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')" wire:navigate>
 								{{ __('Админка') }}
 							</x-nav-link>
-							<x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+							<x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate>
 								{{ __('Дашборд') }}
 							</x-nav-link>
 						@endif
 
 						@if(Auth::user()->isAdmin() || Auth::user()->isModerator())
-							<x-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')">
+							<x-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')" wire:navigate>
 								{{ __('Модерация') }}
 							</x-nav-link>
 						@endif
@@ -59,7 +59,7 @@
 						</x-slot>
 
 						<x-slot name="content">
-							<x-dropdown-link :href="route('profile.edit')">
+							<x-dropdown-link :href="route('profile.edit')" wire:navigate>
 								{{ __('Профиль') }}
 							</x-dropdown-link>
 
@@ -67,7 +67,7 @@
 							<form method="POST" action="{{ route('logout') }}">
 								@csrf
 								<x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-																			this.closest('form').submit();">
+																			this.closest('form').submit();" wire:navigate>
 									{{ __('Выйти') }}
 								</x-dropdown-link>
 							</form>
@@ -102,27 +102,26 @@
 		<div class="pt-2 pb-3 space-y-1">
 			@auth
 				@if(Auth::user()->hasRole('admin'))
-					<x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+					<x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')" wire:navigate>
 						{{ __('Админка') }}
 					</x-responsive-nav-link>
-					<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+					<x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate>
 						{{ __('Дашборд') }}
 					</x-responsive-nav-link>
 				@endif
 
 				@if(Auth::user()->isAdmin() || Auth::user()->isModerator())
-					<x-responsive-nav-link :href="route('admin.beatmaps.index')"
-						:active="request()->routeIs('admin.beatmaps.*')">
+					<x-responsive-nav-link :href="route('admin.beatmaps.index')" :active="request()->routeIs('admin.beatmaps.*')" wire:navigate>
 						{{ __('Модерация') }}
 					</x-responsive-nav-link>
 				@endif
 			@endauth
 
-			<x-responsive-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')">
+			<x-responsive-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')" wire:navigate>
 				{{ __('Карты') }}
 			</x-responsive-nav-link>
 
-			<x-responsive-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
+			<x-responsive-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')" wire:navigate>
 				{{ __('Публикация') }}
 			</x-responsive-nav-link>
 		</div>
@@ -136,7 +135,7 @@
 				</div>
 
 				<div class="mt-3 space-y-1">
-					<x-responsive-nav-link :href="route('profile.edit')">
+					<x-responsive-nav-link :href="route('profile.edit')" wire:navigate>
 						{{ __('Профиль') }}
 					</x-responsive-nav-link>
 
@@ -144,7 +143,7 @@
 					<form method="POST" action="{{ route('logout') }}">
 						@csrf
 						<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-																	this.closest('form').submit();">
+																	this.closest('form').submit();" wire:navigate>
 							{{ __('Выйти') }}
 						</x-responsive-nav-link>
 					</form>
@@ -152,8 +151,8 @@
 			</div>
 		@else
 			<div class="pt-4 pb-1 border-t border-gray-200">
-				<x-responsive-nav-link :href="route('login')">Войти</x-responsive-nav-link>
-				<x-responsive-nav-link :href="route('register')">Зарегистрироваться</x-responsive-nav-link>
+				<x-responsive-nav-link :href="route('login')" wire:navigate>Войти</x-responsive-nav-link>
+				<x-responsive-nav-link :href="route('register')" wire:navigate>Зарегистрироваться</x-responsive-nav-link>
 			</div>
 		@endauth
 	</div>

@@ -49,7 +49,7 @@
 					<!-- Кнопка сброса под формой (если применены фильтры) -->
 					@if(request('q') || request('status'))
 						<div class="mt-3 text-center">
-							<a href="{{ route('beatmaps.index') }}"
+							<a href="{{ route('beatmaps.index') }}" wire:navigate
 								class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-pink-600 transition-colors">
 								× Сбросить все фильтры
 							</a>
@@ -61,11 +61,9 @@
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
 				@foreach ($beatmapSets as $set)
 					<!-- Карточка -->
-					<div
-						class="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md hover:border-pink-300 transition-all duration-300">
-
+					<div class="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md hover:border-pink-300 transition-all duration-300">
 						<!-- Верхняя часть: ведет на страницу карты -->
-						<a href="{{ route('beatmaps.show', $set) }}" class="flex flex-col flex-1">
+						<a href="{{ route('beatmaps.show', $set) }}" class="flex flex-col flex-1" wire:navigate>
 							<!-- Изображение -->
 							<div class="h-44 bg-cover bg-center relative shrink-0"
 								style="background-image: url('{{ asset('storage/' . ($set->bg_path ?? 'default.jpg')) }}')">
@@ -95,7 +93,7 @@
 										<span class="mx-1.5 text-gray-300">•</span>
 
 										<!-- Имя загрузившего со ссылкой -->
-										<a href="{{ route('users.show', $set->user) }}"
+										<a href="{{ route('users.show', $set->user) }}" wire:navigate
 											class="text-pink-500 hover:text-pink-600 hover:underline transition-colors">
 											{{ $set->user->name }}
 										</a>
