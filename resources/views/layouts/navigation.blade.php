@@ -28,11 +28,11 @@
 							</x-nav-link>
 						@endif
 					@endauth
-					<x-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')">
+					<x-nav-link :href="route('beatmaps.index')" :active="request()->routeIs('beatmaps.index')" wire:navigate>
 						{{ __('Карты') }}
 					</x-nav-link>
 
-					<x-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')">
+					<x-nav-link :href="route('beatmaps.upload')" :active="request()->routeIs('beatmaps.upload')" wire:navigate>
 						{{ __('Публикация') }}
 					</x-nav-link>
 				</div>
