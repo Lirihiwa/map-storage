@@ -34,6 +34,153 @@
 		<main>
 			{{ $slot }}
 		</main>
+
+		<!-- ФУТЕР -->
+		<footer class="bg-white border-t border-gray-200 pt-12 pb-32 mt-12">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+					<!-- Левая часть: О проекте -->
+					<div class="space-y-4">
+						<div class="flex items-center gap-2">
+							<x-application-logo class="block h-8 w-auto fill-current text-pink-600" />
+							<span class="text-xl font-black tracking-tighter text-gray-900">MAP<span
+									class="text-pink-600">STORAGE</span></span>
+						</div>
+						<p class="text-sm text-gray-500 leading-relaxed">
+							Открытая платформа для обмена и публикации карт osu!. Автоматический расчет сложности,
+							встроенный плеер и удобная модерация.
+						</p>
+					</div>
+
+					<!-- Средняя часть: Навигация -->
+					<div>
+						<h3 class="text-xs font-black uppercase tracking-widest text-gray-900 mb-6">Навигация</h3>
+						<ul class="grid grid-cols-2 gap-4 text-sm font-medium text-gray-600">
+							<li><a href="{{ route('welcome') }}" wire:navigate
+									class="hover:text-pink-600 transition-colors">Главная</a></li>
+							<li><a href="{{ route('beatmaps.index') }}" wire:navigate
+									class="hover:text-pink-600 transition-colors">Библиотека</a></li>
+							<li><a href="{{ route('beatmaps.upload') }}" wire:navigate
+									class="hover:text-pink-600 transition-colors">Публикация</a></li>
+							<li><a href="{{ route('profile.edit') }}" wire:navigate
+									class="hover:text-pink-600 transition-colors">Профиль</a></li>
+						</ul>
+					</div>
+
+
+					<!-- Правая часть: Контакты и Поддержка -->
+					<div>
+						<h3 class="text-xs font-black uppercase tracking-widest text-gray-900 mb-6">Поддержка</h3>
+						<div class="flex flex-col gap-4">
+							<div class="flex flex-col gap-4" x-data="{ 
+    							copied: false, 
+    							copyEmail() { 
+										navigator.clipboard.writeText('mapstorage.support@gmail.com'); 
+										this.copied = true; 
+										setTimeout(() => this.copied = false, 2000); 
+									} 
+								}"
+							>
+								<div class="flex items-center gap-2">
+									<!-- Основная ссылка (открывает почту) -->
+									@php
+										$subject = "Поддержка MapStorage";
+										$body = "Здравствуйте, команда MapStorage!\n\nМой вопрос/предложение:\n\n---\nОтправлено от: " . (Auth::check() ? Auth::user()->name : 'Гость');
+
+										$mailLink = "mailto:mapstorage.support@gmail.com?" . http_build_query([
+											'subject' => $subject,
+											'body' => $body
+										]);
+									@endphp
+									
+									<a href="{{ $mailLink }}"
+										class="group flex items-center gap-3 text-gray-600 hover:text-pink-600 transition-colors">
+										<div
+											class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-lg group-hover:bg-pink-50 transition-colors">
+											<svg class="w-5 h-5 text-gray-500 group-hover:text-pink-600" fill="none"
+												stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+													d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+											</svg>
+										</div>
+										<div class="flex flex-col">
+											<span
+												class="text-[10px] uppercase font-black tracking-tighter text-gray-400 leading-none mb-1">E-mail</span>
+											<span class="text-sm font-bold">mapstorage.support@gmail.com</span>
+										</div>
+									</a>
+
+									<!-- Кнопка Копировать -->
+									<button @click="copyEmail()"
+										class="ml-2 p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-50 rounded-md transition-all relative"
+										title="Копировать адрес">
+										<!-- Иконка копирования -->
+										<svg x-show="!copied" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+											fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+												d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+										</svg>
+										<!-- Иконка галочки -->
+										<svg x-show="copied" x-cloak xmlns="http://www.w3.org/2000/svg"
+											class="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24"
+											stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+												d="M5 13l4 4L19 7" />
+										</svg>
+
+										<!-- Всплывающая подсказка "Скопировано!" -->
+										<span x-show="copied" x-cloak x-transition
+											class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded shadow-lg">
+											Скопировано!
+										</span>
+									</button>
+								</div>
+
+								<!-- GitHub -->
+								<a href="https://github.com/Lirihiwa" target="_blank"
+									class="group flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors">
+									<div
+										class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors">
+										<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+											<path
+												d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+										</svg>
+									</div>
+									<span class="text-sm font-bold">GitHub</span>
+								</a>
+
+								<!-- Telegram -->
+								<a href="https://t.me/Lirihiwa" target="_blank"
+									class="group flex items-center gap-3 text-gray-600 hover:text-[#26A5E4] transition-colors">
+									<div
+										class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-lg group-hover:bg-[#26A5E4]/10 transition-colors">
+										<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+											<path
+												d="M11.944 0C5.346 0 0 5.348 0 11.944c0 6.595 5.346 11.944 11.944 11.944 6.596 0 11.944-5.349 11.944-11.944C23.888 5.348 18.54 0 11.944 0zm5.836 8.196l-1.9 8.948c-.143.642-.522.8-.106.335l-2.894-2.132-1.396 1.343c-.155.155-.285.285-.584.285l.208-2.942 5.353-4.838c.233-.207-.051-.322-.361-.116l-6.618 4.167-2.851-.89c-.619-.193-.632-.619.129-.916l11.144-4.295c.516-.188.966.119.768.905z" />
+										</svg>
+									</div>
+									<span class="text-sm font-bold">Telegram</span>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<!-- Нижняя плашка -->
+					<div
+						class="border-t border-gray-100 mt-12 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+						<p class="text-xs text-gray-400 font-medium">
+							&copy; {{ date('Y') }} MAPSTORAGE. Все права защищены. Не является официальным ресурсом ppy
+							Pty
+							Ltd.
+						</p>
+						<div class="flex items-center gap-6">
+							<span class="text-[10px] font-black uppercase tracking-widest text-gray-300">Powered by
+								Laravel</span>
+						</div>
+					</div>
+				</div>
+		</footer>
 	</div>
 
 	<!-- Глобальный плеер (Persistent) -->
@@ -89,15 +236,15 @@
 						<!-- Управление -->
 						<div class="flex justify-center">
 							<button onclick="togglePlay()"
-								class="group w-14 h-14 flex items-center justify-center text-pink-600 bg-pink-50 hover:bg-pink-100 rounded-full transition-all active:scale-90 shadow-sm border border-pink-100">
-								<svg xmlns="http://www.w3.org/2000/svg" id="play-icon" class="w-10 h-10"
+								class="group w-14 h-14 flex items-center justify-center text-pink-600 hover:bg-pink-50 rounded-full transition-all active:scale-90 shadow-sm border">
+								<svg xmlns="http://www.w3.org/2000/svg" id="play-icon" class="w-14 h-14"
 									viewBox="0 0 1024 1024">
 									<path fill="currentColor"
 										d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372" />
 									<path fill="currentColor"
 										d="m719.4 499.1l-296.1-215A15.9 15.9 0 0 0 398 297v430c0 13.1 14.8 20.5 25.3 12.9l296.1-215a15.9 15.9 0 0 0 0-25.8m-257.6 134V390.9L628.5 512z" />
 								</svg>
-								<svg xmlns="http://www.w3.org/2000/svg" id="pause-icon" class="w-10 h-10 hidden"
+								<svg xmlns="http://www.w3.org/2000/svg" id="pause-icon" class="w-14 h-14 hidden"
 									fill="currentColor" viewBox="0 0 1024 1024">
 									<path fill="currentColor"
 										d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372m-88-532h-48c-4.4 0-8 3.6-8 8v304c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V360c0-4.4-3.6-8-8-8m224 0h-48c-4.4 0-8 3.6-8 8v304c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V360c0-4.4-3.6-8-8-8" />
