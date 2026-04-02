@@ -48,8 +48,7 @@
 									class="text-pink-600">STORAGE</span></span>
 						</div>
 						<p class="text-sm text-gray-500 leading-relaxed">
-							Открытая платформа для обмена и публикации карт osu!. Автоматический расчет сложности,
-							встроенный плеер и удобная модерация.
+							Открытая платформа для обмена и публикации карт osu!
 						</p>
 					</div>
 
@@ -60,7 +59,7 @@
 							<li><a href="{{ route('welcome') }}" wire:navigate
 									class="hover:text-pink-600 transition-colors">Главная</a></li>
 							<li><a href="{{ route('beatmaps.index') }}" wire:navigate
-									class="hover:text-pink-600 transition-colors">Библиотека</a></li>
+									class="hover:text-pink-600 transition-colors">Карты</a></li>
 							<li><a href="{{ route('beatmaps.upload') }}" wire:navigate
 									class="hover:text-pink-600 transition-colors">Публикация</a></li>
 							<li><a href="{{ route('profile.edit') }}" wire:navigate
