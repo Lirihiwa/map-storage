@@ -91,9 +91,9 @@
 										$mailLink = "mailto:mapstorage.support@gmail.com?" . http_build_query([
 											'subject' => $subject,
 											'body' => $body
-										]);
+										], '', '&', PHP_QUERY_RFC3986);
 									@endphp
-									
+
 									<a href="{{ $mailLink }}"
 										class="group flex items-center gap-3 text-gray-600 hover:text-pink-600 transition-colors">
 										<div
