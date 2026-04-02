@@ -72,14 +72,39 @@
 					<div>
 						<h3 class="text-xs font-black uppercase tracking-widest text-gray-900 mb-6">Поддержка</h3>
 						<div class="flex flex-col gap-4">
-							<div class="flex flex-col gap-4" x-data="{ 
-    							copied: false, 
-    							copyEmail() { 
-										navigator.clipboard.writeText('mapstorage.support@gmail.com'); 
-										this.copied = true; 
-										setTimeout(() => this.copied = false, 2000); 
-									} 
-								}"
+							<div class="flex flex-col gap-4" x-data="
+							{ 
+								copied: false, 
+								copyEmail() { 
+									const email = 'mapstorage.support@gmail.com';
+									
+									if (navigator.clipboard && window.isSecureContext) {
+										navigator.clipboard.writeText(email).then(() => {
+											this.finishCopy();
+										});
+									} else {
+										const textArea = document.createElement('textarea');
+										textArea.value = email;
+										textArea.style.position = 'fixed';
+										textArea.style.left = '-999999px';
+										textArea.style.top = '-999999px';
+										document.body.appendChild(textArea);
+										textArea.focus();
+										textArea.select();
+										try {
+											document.execCommand('copy');
+											this.finishCopy();
+										} catch (err) {
+											console.error('Ошибка копирования:', err);
+										}
+										document.body.removeChild(textArea);
+									}
+								},
+								finishCopy() {
+									this.copied = true; 
+									setTimeout(() => this.copied = false, 2000);
+								}
+							}"
 							>
 								<div class="flex items-center gap-2">
 									<!-- Основная ссылка (открывает почту) -->
